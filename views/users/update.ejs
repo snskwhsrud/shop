@@ -22,7 +22,6 @@
         주소검색
       </button>
     </div>
-
     <div>
       <input
         name="address2"
@@ -31,14 +30,15 @@
         value="<%=user.address2%>"
       />
     </div>
+    <hr />
     <div>
       <img
-        id="photo"
-        class="mb-2"
         src="http://via.placeholder.com/150x150"
-        width="150px"
+        id="photo"
+        width="200"
+        class="photo"
       />
-      <input type="file" name="file" class="form-control" />
+      <input type="file" name="file" class="form-control mt-2" />
       <input name="photo" value="<%=user.photo%>" type="hidden" />
     </div>
     <div class="text-center my-3">
@@ -52,12 +52,14 @@
   if (photo) {
     $("#photo").attr("src", "/upload/photo/" + photo);
   } else {
-    $("#photo").attr("src", "http://via.placeholder.com/150x150");
+    $("#photo").attr("src", "http://via.placeholder.com/100x100");
   }
-  // 파일이 바뀐 경우
+
+  //파일 바뀐경우 미리보기
   $(frm.file).on("change", function (e) {
     $("#photo").attr("src", URL.createObjectURL(e.target.files[0]));
   });
+
   //수정버튼을 눌렀을때
   $(frm).on("submit", function (e) {
     e.preventDefault();
