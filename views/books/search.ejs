@@ -54,18 +54,12 @@
   //도서등록 버튼을 클릭한 경우
   $("#div_books").on("click", "button", function () {
     const book = JSON.parse($(this).attr("book"));
-    const title = book.title;
     const authors = book.authors.join();
-    const thumbnail = book.thumbnail;
-    const contents = book.contents;
-    const publisher = book.publisher;
-    const price = book.price;
-    const isbn = book.isbn;
     if (confirm("도서를 등록하실래요?")) {
       $.ajax({
         type: "post",
         url: "/books/search/insert",
-        data: { title, authors, thumbnail, contents, publisher, price, isbn },
+        data: { ...book, authors },
         success: function (data) {
           if (data == "0") {
             alert("도서가 등록되었습니다.");
