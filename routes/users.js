@@ -103,7 +103,6 @@ router.get("/update", function (req, res) {
     });
   });
 });
-
 //정보수정
 router.post("/update", upload.single("file"), function (req, res) {
   const uid = req.body.uid;
@@ -113,14 +112,13 @@ router.post("/update", upload.single("file"), function (req, res) {
   const address2 = req.body.address2;
   let photo = req.body.photo;
   if (req.file) photo = req.file.filename;
-  console.log("photo........", photo);
-
   const sql =
     "update users set uname=?,phone=?,address1=?,address2=?,photo=? where uid=?";
   db.get().query(
     sql,
     [uname, phone, address1, address2, photo, uid],
     function (err, rows) {
+      if (err) console.log("sql 오류..............................", err);
       res.redirect("/users/mypage?uid=" + uid);
     }
   );

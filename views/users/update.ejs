@@ -48,6 +48,7 @@
   </form>
 </div>
 <script>
+  //사진츨력
   const photo = "<%=user.photo%>";
   if (photo) {
     $("#photo").attr("src", "/upload/photo/" + photo);
@@ -55,33 +56,16 @@
     $("#photo").attr("src", "http://via.placeholder.com/100x100");
   }
 
-  //파일 바뀐경우 미리보기
+  //파일이 바뀐경우
   $(frm.file).on("change", function (e) {
     $("#photo").attr("src", URL.createObjectURL(e.target.files[0]));
   });
 
-  //수정버튼을 눌렀을때
+  //폼이 서밋되는 경우
   $(frm).on("submit", function (e) {
     e.preventDefault();
-    const uid = $(frm.uid).val();
-    const uname = $(frm.uname).val();
-    const phone = $(frm.phone).val();
-    const address1 = $(frm.address1).val();
-    const address2 = $(frm.address2).val();
-    if (confirm("변경된 내용을 저장하실래요?")) frm.submit();
-  });
-
-  //주소검색버튼을 클릭한 경우
-  $("#search").on("click", function () {
-    new daum.Postcode({
-      oncomplete: function (data) {
-        console.log(data);
-        if (data.buildingName != "") {
-          $(frm.address1).val(data.address + " " + data.buildingName);
-        } else {
-          $(frm.address1).val(data.address);
-        }
-      },
-    }).open();
+    if (confirm("수정한 정보를 저장하시겠습니까?")) {
+      frm.submit();
+    }
   });
 </script>
