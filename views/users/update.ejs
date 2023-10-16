@@ -1,8 +1,8 @@
-<div class="my-5 row justify-content-center">
-  <h1 class="text-center">정보수정</h1>
+<div class="my-5 row justify-content-center mx-3">
+  <h1 class="text-center mb-5">정보수정</h1>
   <form
     name="frm"
-    class="col-md-6 card p-3"
+    class="col-md-8 card p-3"
     method="post"
     enctype="multipart/form-data"
   >
@@ -48,7 +48,7 @@
   </form>
 </div>
 <script>
-  //사진츨력
+  //사진출력
   const photo = "<%=user.photo%>";
   if (photo) {
     $("#photo").attr("src", "/upload/photo/" + photo);
@@ -64,8 +64,22 @@
   //폼이 서밋되는 경우
   $(frm).on("submit", function (e) {
     e.preventDefault();
-    if (confirm("수정한 정보를 저장하시겠습니까?")) {
+    if (confirm("수정한 정보를 저장하실래요?")) {
       frm.submit();
     }
+  });
+
+  //주소검색버튼을 클릭한 경우
+  $("#search").on("click", function () {
+    new daum.Postcode({
+      oncomplete: function (data) {
+        console.log(data);
+        if (data.buildingName != "") {
+          $(frm.address1).val(data.address + " " + data.buildingName);
+        } else {
+          $(frm.address1).val(data.address);
+        }
+      },
+    }).open();
   });
 </script>

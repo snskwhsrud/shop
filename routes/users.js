@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var db = require("../db");
 var multer = require("multer");
+
 //업로드함수
 var upload = multer({
   storage: multer.diskStorage({
@@ -81,7 +82,7 @@ router.get("/mypage", function (req, res) {
   const uid = req.query.uid;
   const sql = "select * from users where uid=?";
   db.get().query(sql, [uid], function (err, rows) {
-    //console.log("..........", rows[0]);
+    //console.log('..........', rows[0]);
     res.render("index", {
       title: "마이페이지",
       pageName: "users/mypage.ejs",
@@ -95,7 +96,7 @@ router.get("/update", function (req, res) {
   const uid = req.query.uid;
   const sql = "select * from users where uid=?";
   db.get().query(sql, [uid], function (err, rows) {
-    console.log("..........", rows[0]);
+    //console.log('..........', rows[0]);
     res.render("index", {
       title: "정보수정",
       pageName: "users/update.ejs",
@@ -103,10 +104,11 @@ router.get("/update", function (req, res) {
     });
   });
 });
-//정보수정
+
+//정보수정하기
 router.post("/update", upload.single("file"), function (req, res) {
-  const uid = req.body.uid;
   const uname = req.body.uname;
+  const uid = req.body.uid;
   const phone = req.body.phone;
   const address1 = req.body.address1;
   const address2 = req.body.address2;
@@ -118,11 +120,12 @@ router.post("/update", upload.single("file"), function (req, res) {
     sql,
     [uname, phone, address1, address2, photo, uid],
     function (err, rows) {
-      if (err) console.log("sql 오류..............................", err);
+      if (err) console.log("sql 오류...............", err);
       res.redirect("/users/mypage?uid=" + uid);
     }
   );
 });
+
 //비밀번호변경 페이지 이동
 router.get("/change", function (req, res) {
   res.render("index", { title: "비밀번호변경", pageName: "users/change.ejs" });
@@ -138,4 +141,5 @@ router.post("/change", function (req, res) {
     res.sendStatus(200);
   });
 });
+
 module.exports = router;
