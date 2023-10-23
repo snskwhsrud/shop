@@ -42,6 +42,7 @@ router.post("/delete", function (req, res) {
 });
 
 //리뷰수정
+
 router.post("/update", function (req, res) {
   const rid = req.body.rid;
   const contents = req.body.contents;
